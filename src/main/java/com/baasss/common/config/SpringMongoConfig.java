@@ -1,24 +1,22 @@
 package com.baasss.common.config;
 
+import java.net.UnknownHostException;
 import com.mongodb.MongoClient;
-
 import com.mongodb.MongoClientURI;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.MongoTemplate;
-
 
 public class SpringMongoConfig {
-   
-    public @Bean
-    MongoTemplate mongoTemplate() throws Exception{
+    
+    public MongoClient getMongoClient() {
+    	MongoClient mongoClient=null ;
+    	String link ="mongodb://bharathnaggowda:m0ngodbPa$$@ds049150.mongolab.com:49150/bikesharedb";
+    	MongoClientURI uri =new MongoClientURI(link);
     	
-    	String textUri = "mongodb://bharathnaggowda:m0ngodbPa$$@ds049150.mongolab.com:49150/bikesharedb";
-        MongoClientURI uri = new MongoClientURI(textUri);
-        
-        MongoTemplate mongoTemplate = new MongoTemplate(new MongoClient(uri), "bikesharedb");
-    		return mongoTemplate;
-     
-      
+    	try{
+    		mongoClient = new MongoClient(uri);
+    	}catch(UnknownHostException ex){
+    		ex.printStackTrace();
+    	}
+		return mongoClient;
     }
 
 }
